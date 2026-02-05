@@ -14,10 +14,28 @@ class Byte:
             result += str(digit)
         return result
 
+    def to_int(self):
+        result = 0
+        num = [7, 6, 5, 4, 3, 2, 1, 0]
+        for i in range(0, 8):
+            result += self.list[i] * (2 ** num[i])
+        return result
+
+    def int_to_bit(self, integer):
+        integer = integer % 256
+        bits2 = [128, 64, 32, 16, 8, 4, 2, 1]
+        for i in range(8):
+            self.list[i] = integer // (bits2[i])
+            integer = integer % bits2[i]
 
     def __add__(self, other):
+        result = Byte()
         if isinstance(other, Byte):
-            print(other)
+            sum_integers = self.to_int() + other.to_int()
+            result.int_to_bit(sum_integers)
+            return result
+        else:
+            raise TypeError("Operand must be Byte")
 
     def __lshift__(self, other):
         if not isinstance(other, int):
@@ -32,13 +50,11 @@ class Byte:
 
             return [0, 0, 0, 0, 0, 0, 0, 0]
         else:
-            print(f"Cannot lshift {other} is lower than 0")
-            return None
+            raise TypeError(f"Cannot lshift {other} is lower than 0")
 
     def __rshift__(self, other):
         if not isinstance(other, int):
-            print(f"Cannot lshift {other} is not Integer")
-            return None
+            raise TypeError(f"Cannot lshift {other} is not Integer")
         if other in range(0, 8):
             new_list = self.list[0:8 - other]
             for x in range(other):
@@ -47,22 +63,19 @@ class Byte:
         elif other >= 8:
             return [0, 0, 0, 0, 0, 0, 0, 0]
         else:
-            print(f"Cannot rshift {other} is lower than 0")
-            return None
+            raise TypeError(f"Cannot rshift {other} is lower than 0")
 
     def __and__(self, other):
         if isinstance(other, Byte):
             return [int(bool(self.list[index]) and bool(other.list[index])) for index in range(8)]
         else:
-            print(f"There is not in the same Class{other} and {self}")
-            return None
+            raise TypeError(f"There is not in the same Class{other} and {self}")
 
     def __or__(self, other):
         if isinstance(other, Byte):
             return [int(bool(self.list[index]) or bool(other.list[index])) for index in range(8)]
         else:
-            print(f"There is not in the same Class{other} and {self}")
-            return None
+            raise TypeError(f"There is not in the same Class{other} and {self}")
 
     def __xor__(self, other):
         if isinstance(other, Byte):
@@ -71,10 +84,10 @@ class Byte:
                     not bool(self.list[index]) and bool(other.list[index]))) for index in range(8)]
             return new_byte
         else:
-            print(f"There is not in the same Class{other} and {self}")
-            return None
+            raise TypeError(f"There is not in the same Class{other} and {self}")
 
 
 byte1 = Byte("01111011")
-byte2 = Byte("01010001")
+byte2 = Byte("10000001")
+
 print(byte1 + byte2)
