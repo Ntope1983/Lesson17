@@ -37,6 +37,63 @@ class Byte:
         else:
             raise TypeError("Operand must be Byte")
 
+    def __sub__(self, other):
+        result = Byte()
+        if isinstance(other, Byte):
+            sub_integers = self.to_int() - other.to_int()
+            if sub_integers < 0:
+                raise ValueError("Sub doesnt support negative byte")
+            result.int_to_bit(sub_integers)
+            return result
+        else:
+            raise TypeError("Operand must be Byte")
+
+    def __mul__(self, other):
+        result = Byte()
+        if isinstance(other, Byte):
+            mul_integers = self.to_int() * other.to_int()
+            mul_integers %= 256
+            result.int_to_bit(mul_integers)
+            return result
+        else:
+            raise TypeError("Operand must be Byte")
+
+    def __floordiv__(self, other):
+        result = Byte()
+        if isinstance(other, Byte):
+            floor_integers = self.to_int() // other.to_int()
+            result.int_to_bit(floor_integers)
+            return result
+        else:
+            raise TypeError("Operand must be Byte")
+
+    def __div__(self, other):
+        result = Byte()
+        if isinstance(other, Byte):
+            floor_integers = self.to_int() / other.to_int()
+            result.int_to_bit(floor_integers)
+            return result
+        else:
+            raise TypeError("Operand must be Byte")
+
+    def __mod__(self, other):
+        result = Byte()
+        if isinstance(other, Byte):
+            mood_integers = self.to_int() % other.to_int()
+            result.int_to_bit(mood_integers)
+            return result
+        else:
+            raise TypeError("Operand must be Byte")
+
+    def __pow__(self, other):
+        result = Byte()
+        if isinstance(other, Byte):
+            pow_integers = self.to_int() ** other.to_int()
+            result.int_to_bit(pow_integers)
+            return result
+        else:
+            raise TypeError("Operand must be Byte")
+
     def __lshift__(self, other):
         if not isinstance(other, int):
             print(f"Cannot lshift {other} is not Integer")
@@ -87,7 +144,8 @@ class Byte:
             raise TypeError(f"There is not in the same Class{other} and {self}")
 
 
-byte1 = Byte("01111011")
-byte2 = Byte("10000001")
-
-print(byte1 + byte2)
+byte1 = Byte("00000011")
+byte2 = Byte("00000101")
+print(byte1.to_int())
+print(byte2.to_int())
+print((byte2 ** byte1).to_int())
