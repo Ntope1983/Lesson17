@@ -1,4 +1,4 @@
-#This Byte class correctly models an 8-bit sequence
+# This Byte class correctly models an 8-bit sequence
 # with proper input validation, string representation,
 # and supports indexing and iteration via __getitem__.
 class Byte:
@@ -19,6 +19,17 @@ class Byte:
 
     def __getitem__(self, item):
         return self.list[item]
+
+    def __len__(self):
+        return 8
+
+
+def __setitem__(self, pos, value):
+    if not (0 <= pos < 8):
+        raise IndexError("Index must be 0–7 for Byte")
+    if value not in (0, 1):
+        raise ValueError("Byte can only hold 0 or 1")
+    self.list[pos] = value
 
 
 byte = Byte("01011010")
