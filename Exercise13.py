@@ -2,17 +2,17 @@ import random
 
 
 class Character:
-    def __init__(self, name, equip=None):
+    def __init__(self, name, equip):
         self.name = name
-        self.health = 100
+        self.health = 100 * eq.cape
         self.attack_speed = 2
         self.delay = 0
-        self.max_health = 100.0
+        self.max_health = 100.0 * eq.cape
         self.equipment = equip
 
     def attack(self):
         self.delay = 10 - self.attack_speed
-        return random.randint(3, 10)
+        return round(random.randint(3, 10) * self.equipment.sword)
 
     def is_dead(self):
         if self.health <= 0:
@@ -137,18 +137,19 @@ class Equipment:
             raise ValueError(f"Sword and Cape be a number")
 
     def __str__(self):
-        return "Sword:" + str(round(self.sword, 2)) + ",Cape:" + str(round(self.sword, 2))
-
-
-eq1 = Equipment(random.uniform(1.1, 1.5), random.uniform(1.1, 1.3))
-orc1 = Character("Ntope", eq1)
-orc2 = Character("Vlassonio")
-orc3 = Character("Xoverdose")
-orc4 = Character("Skoulikion")
-orc5 = Character("Valmadin")
-night_elf1 = Character("Crowly")
-night_elf2 = Character("Hydra")
-night_elf3 = Character("Sodapopin")
+        return "Sword:" + str(round(self.sword, 2)) + ",Cape:" + str(round(self.cape, 2))
+total_equipments=[]
+for i in range(8):
+    eq=Equipment(random.uniform(1.1, 1.5), random.uniform(1.1, 1.3))
+    total_equipments.append(eq)
+orc1 = Character("Ntope", total_equipments[0])
+orc2 = Character("Vlassonio", total_equipments[1])
+orc3 = Character("Xoverdose", total_equipments[2])
+orc4 = Character("Skoulikion", total_equipments[3])
+orc5 = Character("Valmadin", total_equipments[4])
+night_elf1 = Character("Crowly", total_equipments[5])
+night_elf2 = Character("Hydra", total_equipments[6])
+night_elf3 = Character("Sodapopin", total_equipments[7])
 team_a = [orc1, orc2, orc3, orc4, orc5]
 team_b = [night_elf1, night_elf2, night_elf3]
 arena1 = Arena(team_a, team_b)
